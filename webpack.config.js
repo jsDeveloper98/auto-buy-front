@@ -11,6 +11,7 @@ module.exports = {
   },
   devServer: {
     static: "./dist",
+    historyApiFallback: true,
   },
   module: {
     rules: [
