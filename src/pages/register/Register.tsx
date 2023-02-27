@@ -3,12 +3,13 @@ import { Button, Form } from "react-bootstrap";
 
 import { Formik } from "formik";
 
-import { useAppDispatch } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { createUser } from "../../redux/slices/users";
 import { regFormInitValues, RegisterSchema } from "./Register.constants";
 
 export const Register: FC = () => {
   const dispatch = useAppDispatch();
+  // const test = useAppSelector((state) => state.users);
 
   return (
     <Formik

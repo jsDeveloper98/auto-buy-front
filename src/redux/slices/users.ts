@@ -1,35 +1,29 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import { RegFormValues } from "../../pages/register/Register.types";
+import { AuthService } from "../../services";
 
 export const createUser = createAsyncThunk(
   "users/create",
   async (values: RegFormValues) => {
-    const data = await fetch("http://localhost:3000/auth/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    });
-
-    console.log("%c data ===>", "color: #90ee90", data);
-    console.log("%c values ===>", "color: #90ee90", values);
-
-    console.log(
-      "%c await data.json() ===>",
-      "color: #90ee90",
-      await data.json()
-    );
+    return AuthService.register(values);
   }
 );
 
 const initialState: {
-  userId: string;
-  token: string;
+  error: null;
+  loading: boolean;
+  data: {
+    userId: string;
+    token: string;
+  };
 } = {
-  userId: "",
-  token: "",
+  error: null,
+  loading: false,
+  data: {
+    userId: "",
+    token: "",
+  },
 };
 
 const usersSlice = createSlice({
@@ -37,10 +31,12 @@ const usersSlice = createSlice({
   initialState: initialState,
   reducers: {},
   extraReducers: {
-    [createUser.fulfilled.type]: (state, action) => {
-      // state.userId = true;
-      // state.user = action.payload.user;
-      // return;
+    [createUser.pending.type]: (state) => {
+      state.loading = true;
+    },
+    [createUser.rejected.type]: (state, action) => {
+      state.loading = false;
+      // state.error = action.errorMessage;
     },
   },
 });
