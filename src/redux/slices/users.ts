@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { RegFormValues } from "../pages/register/Register.types";
+
+import { RegFormValues } from "../../pages/register/Register.types";
 
 export const createUser = createAsyncThunk(
   "users/create",
@@ -8,12 +9,10 @@ export const createUser = createAsyncThunk(
   }
 );
 
-interface IInitialState {
+const initialState: {
   userId: string;
   token: string;
-}
-
-const initialState: IInitialState = {
+} = {
   userId: "",
   token: "",
 };

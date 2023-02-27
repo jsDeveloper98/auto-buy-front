@@ -3,8 +3,8 @@ import { Button, Form } from "react-bootstrap";
 
 import { Formik } from "formik";
 
-import { createUser } from "../../store/users";
-import { useAppDispatch } from "../../hooks/redux";
+import { useAppDispatch } from "../../redux/hooks";
+import { createUser } from "../../redux/slices/users";
 import { regFormInitValues, RegisterSchema } from "./Register.constants";
 
 export const Register: FC = () => {
