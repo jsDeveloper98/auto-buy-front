@@ -1,7 +1,7 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { RegFormValues } from "../../pages/register/Register.types";
 import { AuthService } from "../../services";
+import { RegFormValues } from "../../pages/register/Register.types";
 
 export const createUser = createAsyncThunk(
   "users/create",
@@ -10,34 +10,40 @@ export const createUser = createAsyncThunk(
   }
 );
 
+interface IData {
+  token?: string;
+  userId?: string;
+}
+
 const initialState: {
-  error: null;
+  data: IData;
+  error?: string;
   loading: boolean;
-  data: {
-    userId: string;
-    token: string;
-  };
 } = {
-  error: null,
+  data: {},
+  error: "",
   loading: false,
-  data: {
-    userId: "",
-    token: "",
-  },
 };
 
 const usersSlice = createSlice({
   name: "users",
   initialState: initialState,
   reducers: {},
-  extraReducers: {
-    [createUser.pending.type]: (state) => {
+  extraReducers: (builder) => {
+    builder.addCase(createUser.pending, (state) => {
       state.loading = true;
-    },
-    [createUser.rejected.type]: (state, action) => {
+    });
+    builder.addCase(
+      createUser.fulfilled,
+      (state, { payload }: PayloadAction<IData>) => {
+        state.loading = false;
+        state.data = payload;
+      }
+    );
+    builder.addCase(createUser.rejected, (state, { error }) => {
       state.loading = false;
-      // state.error = action.errorMessage;
-    },
+      state.error = error.message;
+    });
   },
 });
 

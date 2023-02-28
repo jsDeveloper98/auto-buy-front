@@ -9,7 +9,9 @@ import { regFormInitValues, RegisterSchema } from "./Register.constants";
 
 export const Register: FC = () => {
   const dispatch = useAppDispatch();
-  // const test = useAppSelector((state) => state.users);
+  const error = useAppSelector((state) => state.users.error);
+
+  console.log("%c error ===>", "color: #90ee90", error);
 
   return (
     <Formik
