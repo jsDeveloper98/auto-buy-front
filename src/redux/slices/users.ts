@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { AuthService } from "../../services";
+import { ISuccessResponse } from "../../types";
 import { RegFormValues } from "../../pages/register/Register.types";
 
 export const createUser = createAsyncThunk(
@@ -35,9 +36,11 @@ const usersSlice = createSlice({
     });
     builder.addCase(
       createUser.fulfilled,
-      (state, { payload }: PayloadAction<IData>) => {
+      (state, { payload }: PayloadAction<ISuccessResponse<IData>>) => {
+        state.error = "";
         state.loading = false;
-        state.data = payload;
+        state.data = payload.data;
+        localStorage.setItem("userData", JSON.stringify(payload.data));
       }
     );
     builder.addCase(createUser.rejected, (state, { error }) => {

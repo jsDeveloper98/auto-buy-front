@@ -1,8 +1,8 @@
 import { Container } from "react-bootstrap";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 
 import { NavBar } from "./components";
-import { Login, Register } from "./pages";
+import { AppRoutes } from "./components/app-routes";
 
 export const App = () => {
   return (
@@ -10,10 +10,7 @@ export const App = () => {
       <BrowserRouter>
         <NavBar />
         <Container>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-          </Routes>
+          <AppRoutes />
         </Container>
       </BrowserRouter>
     </div>

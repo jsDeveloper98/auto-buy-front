@@ -1,93 +1,119 @@
 import { FC } from "react";
-import { Button, Form } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { Alert, Button, Form, Spinner } from "react-bootstrap";
 
 import { Formik } from "formik";
 
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { createUser } from "../../redux/slices/users";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { regFormInitValues, RegisterSchema } from "./Register.constants";
 
 export const Register: FC = () => {
+  let navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const error = useAppSelector((state) => state.users.error);
 
-  console.log("%c error ===>", "color: #90ee90", error);
+  const { error, loading } = useAppSelector((state) => state.users);
 
   return (
-    <Formik
-      initialValues={regFormInitValues}
-      validationSchema={RegisterSchema}
-      onSubmit={(values) => {
-        dispatch(createUser(values));
-      }}
-    >
-      {({
-        errors,
-        touched,
-        handleChange,
-        values,
-        handleBlur,
-        handleSubmit,
-      }) => (
-        <div className="Register d-flex justify-content-center mt-5">
-          <Form onSubmit={handleSubmit} noValidate className="w-25">
-            <Form.Group className="mb-3" controlId="username">
-              <Form.Label>Username</Form.Label>
-              <Form.Control
-                type="text"
-                name="username"
-                value={values.username}
-                onBlur={handleBlur}
-                onChange={handleChange}
-                placeholder="Enter username"
-                isValid={touched.username && !errors.username}
-                isInvalid={touched.username && !!errors.username}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.username}
-              </Form.Control.Feedback>
-            </Form.Group>
+    <>
+      <Formik
+        initialValues={regFormInitValues}
+        validationSchema={RegisterSchema}
+        onSubmit={(values) =>
+          dispatch(createUser(values)).then((res) => {
+            navigate("/");
+          })
+        }
+      >
+        {({
+          errors,
+          values,
+          touched,
+          handleBlur,
+          handleChange,
+          handleSubmit,
+        }) => (
+          <fieldset disabled={loading}>
+            <div className="Register d-flex align-items-center flex-column mt-5">
+              {error && (
+                <Alert key="danger" variant="danger">
+                  {error}
+                </Alert>
+              )}
 
-            <Form.Group className="mb-3" controlId="email">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control
-                type="email"
-                name="email"
-                value={values.email}
-                onBlur={handleBlur}
-                onChange={handleChange}
-                placeholder="Enter email"
-                isValid={touched.email && !errors.email}
-                isInvalid={touched.email && !!errors.email}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.email}
-              </Form.Control.Feedback>
-            </Form.Group>
+              <Form onSubmit={handleSubmit} noValidate className="w-25">
+                <Form.Group className="mb-3" controlId="username">
+                  <Form.Label>Username</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="username"
+                    onBlur={handleBlur}
+                    value={values.username}
+                    onChange={handleChange}
+                    placeholder="Enter username"
+                    isValid={touched.username && !errors.username}
+                    isInvalid={touched.username && !!errors.username}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.username}
+                  </Form.Control.Feedback>
+                </Form.Group>
 
-            <Form.Group className="mb-3" controlId="password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                name="password"
-                value={values.password}
-                onBlur={handleBlur}
-                onChange={handleChange}
-                placeholder="Enter password"
-                isValid={touched.password && !errors.password}
-                isInvalid={touched.password && !!errors.password}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.password}
-              </Form.Control.Feedback>
-            </Form.Group>
+                <Form.Group className="mb-3" controlId="email">
+                  <Form.Label>Email address</Form.Label>
+                  <Form.Control
+                    type="email"
+                    name="email"
+                    onBlur={handleBlur}
+                    value={values.email}
+                    onChange={handleChange}
+                    placeholder="Enter email"
+                    isValid={touched.email && !errors.email}
+                    isInvalid={touched.email && !!errors.email}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.email}
+                  </Form.Control.Feedback>
+                </Form.Group>
 
-            <Button type="submit" variant="primary">
-              Register
-            </Button>
-          </Form>
-        </div>
-      )}
-    </Formik>
+                <Form.Group className="mb-3" controlId="password">
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    name="password"
+                    onBlur={handleBlur}
+                    value={values.password}
+                    onChange={handleChange}
+                    placeholder="Enter password"
+                    isValid={touched.password && !errors.password}
+                    isInvalid={touched.password && !!errors.password}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.password}
+                  </Form.Control.Feedback>
+                </Form.Group>
+
+                <Button type="submit" variant="primary" disabled={loading}>
+                  {loading ? (
+                    <span>
+                      <Spinner
+                        as="span"
+                        size="sm"
+                        role="status"
+                        animation="border"
+                        aria-hidden="true"
+                      />
+                      <span className="visually-hidden">Loading...</span>
+                    </span>
+                  ) : (
+                    <span>Register</span>
+                  )}
+                </Button>
+              </Form>
+            </div>
+          </fieldset>
+        )}
+      </Formik>
+    </>
   );
 };
