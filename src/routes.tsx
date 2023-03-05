@@ -1,9 +1,9 @@
 import { FC } from "react";
 import { Route, Routes } from "react-router-dom";
 
-import { Home } from "../../pages/home";
-import { Login, Register } from "../../pages";
-import { useAppSelector } from "../../redux/hooks";
+import { Home } from "./pages/home";
+import { Login, Register } from "./pages";
+import { useAppSelector } from "./redux/hooks";
 
 export const AppRoutes: FC = () => {
   const {
@@ -12,6 +12,8 @@ export const AppRoutes: FC = () => {
 
   return (
     <Routes>
+      <Route path="/" element={<Home />} />
+
       {token ? (
         <Route path="/" element={<Home />} />
       ) : (

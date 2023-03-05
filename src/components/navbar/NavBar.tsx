@@ -2,12 +2,23 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Container, Form, Nav, Navbar } from "react-bootstrap";
 
-import { useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { openConfirmationModal } from "../../redux/slices/confirmationModal";
 
 export const NavBar: React.FC = () => {
   const {
     data: { token },
   } = useAppSelector((state) => state.users);
+  const dispatch = useAppDispatch();
+
+  const openLogoutConfirmation = () => {
+    dispatch(
+      openConfirmationModal({
+        title: "Your'e sure that you want to logout?",
+        confirmActionName: "logout",
+      })
+    );
+  };
 
   return (
     <Navbar bg="dark" variant="dark">
@@ -38,7 +49,7 @@ export const NavBar: React.FC = () => {
 
           <Nav>
             {token ? (
-              <Nav.Link as={Link} to="/logout">
+              <Nav.Link as="div" onClick={openLogoutConfirmation}>
                 Logout
               </Nav.Link>
             ) : (

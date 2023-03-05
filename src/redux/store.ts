@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import createUser from "./slices/users";
+import usersReducer from "./slices/users";
+import confirmationModalReducer from "./slices/confirmationModal";
 
 const store = configureStore({
   reducer: {
-    users: createUser,
+    users: usersReducer,
+    confirmationModal: confirmationModalReducer,
   },
 });
 

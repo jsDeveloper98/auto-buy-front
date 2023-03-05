@@ -29,7 +29,21 @@ const initialState: {
 const usersSlice = createSlice({
   name: "users",
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    checkLogin: (state) => {
+      const userData = localStorage.getItem("userData");
+
+      console.log("%c userData ===>", "color: #90ee90", userData);
+
+      if (userData) {
+        state.data = JSON.parse(userData);
+      }
+    },
+    logout: (state) => {
+      state.data = {};
+      localStorage.removeItem("userData");
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(createUser.pending, (state) => {
       state.loading = true;
@@ -49,5 +63,7 @@ const usersSlice = createSlice({
     });
   },
 });
+
+export const { checkLogin, logout } = usersSlice.actions;
 
 export default usersSlice.reducer;
