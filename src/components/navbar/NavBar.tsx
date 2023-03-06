@@ -1,17 +1,20 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Button, Container, Form, Nav, Navbar } from "react-bootstrap";
 
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { openConfirmationModal } from "../../redux/slices/confirmationModal";
 
 export const NavBar: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const { pathname } = useLocation();
   const {
     data: { token },
   } = useAppSelector((state) => state.users);
-  const dispatch = useAppDispatch();
 
-  const openLogoutConfirmation = () => {
+  const pathIsActive = (path: string): boolean => pathname === path;
+
+  const openLogoutConfirmation = (): void => {
     dispatch(
       openConfirmationModal({
         title: "Your'e sure that you want to logout?",
@@ -30,10 +33,20 @@ export const NavBar: React.FC = () => {
 
           {token && (
             <Nav>
-              <Nav.Link as={Link} to="/sdfjusdhf">
+              <Nav.Link
+                as={Link}
+                to="/my_announcements"
+                active={pathIsActive("/my_announcements")}
+              >
                 My Announcements
               </Nav.Link>
-              <Nav.Link href="#features">Create Announcement</Nav.Link>
+              <Nav.Link
+                as={Link}
+                to="/create_announcement"
+                active={pathIsActive("/create_announcement")}
+              >
+                Create Announcement
+              </Nav.Link>
             </Nav>
           )}
         </div>
@@ -56,10 +69,14 @@ export const NavBar: React.FC = () => {
               </Nav.Link>
             ) : (
               <>
-                <Nav.Link as={Link} to="/login">
+                <Nav.Link active={pathIsActive("/login")} as={Link} to="/login">
                   Login
                 </Nav.Link>
-                <Nav.Link as={Link} to="/register">
+                <Nav.Link
+                  as={Link}
+                  to="/register"
+                  active={pathIsActive("/register")}
+                >
                   Register
                 </Nav.Link>
               </>
