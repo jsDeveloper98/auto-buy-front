@@ -8,7 +8,11 @@ import {
   reduxStoredFunctionMap,
 } from "./ConfirmationModal.constants";
 
-export const ConfirmationModal: FC = () => {
+interface IProps {
+  onConfirm?: (actionType: string) => void;
+}
+
+export const ConfirmationModal: FC<IProps> = ({ onConfirm }) => {
   const dispatch = useAppDispatch();
   const { data, isOpen } = useAppSelector((state) => state.confirmationModal);
 
@@ -36,6 +40,7 @@ export const ConfirmationModal: FC = () => {
           <Button
             variant="primary"
             onClick={() => {
+              onConfirm?.(data.confirmActionName);
               dispatch(reduxStoredFunctionMap[data.confirmActionName]());
               dispatch(closeConfirmationModal());
             }}

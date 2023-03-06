@@ -30,7 +30,9 @@ export const NavBar: React.FC = () => {
 
           {token && (
             <Nav>
-              <Nav.Link href="#home">My Announcements</Nav.Link>
+              <Nav.Link as={Link} to="/sdfjusdhf">
+                My Announcements
+              </Nav.Link>
               <Nav.Link href="#features">Create Announcement</Nav.Link>
             </Nav>
           )}
