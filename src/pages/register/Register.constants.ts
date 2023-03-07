@@ -1,6 +1,6 @@
 import { object, string } from "yup";
 
-import { RegFormValues } from "./Register.types";
+import { IRegFormValues } from "./Register.types";
 
 export const RegisterSchema = object().shape({
   email: string().email("Invalid email").required("Required"),
@@ -14,7 +14,7 @@ export const RegisterSchema = object().shape({
     .required("Required"),
 });
 
-export const regFormInitValues: RegFormValues = {
+export const regFormInitValues: IRegFormValues = {
   email: "",
   username: "",
   password: "",

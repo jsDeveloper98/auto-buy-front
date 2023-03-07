@@ -1,7 +1,7 @@
-import { RegFormValues } from "../pages/register/Register.types";
+import { IRegFormValues } from "../pages/register/Register.types";
 
 class AuthS {
-  async register(values: RegFormValues) {
+  async register(values: IRegFormValues) {
     try {
       const res = await fetch("http://localhost:3000/auth/register", {
         method: "POST",

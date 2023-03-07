@@ -1,9 +1,9 @@
 import { IRoutesConfig } from "./types";
-import { NotFound } from "../pages/not-found";
 import {
   Home,
   Login,
   Register,
+  NotFound,
   MyAnnouncements,
   CreateAnnouncement,
 } from "../pages";

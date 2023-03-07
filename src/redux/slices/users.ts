@@ -2,11 +2,11 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { AuthService } from "../../services";
 import { ISuccessResponse } from "../../types";
-import { RegFormValues } from "../../pages/register/Register.types";
+import { IRegFormValues } from "../../pages/register/Register.types";
 
 export const createUser = createAsyncThunk(
   "users/create",
-  async (values: RegFormValues) => {
+  async (values: IRegFormValues) => {
     return AuthService.register(values);
   }
 );
