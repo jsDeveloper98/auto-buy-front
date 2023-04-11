@@ -1,22 +1,40 @@
 import { FC } from "react";
-import { Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 
 import { Formik } from "formik";
 
+import { useAppDispatch } from "../../redux/hooks";
+import { createAnnouncement } from "../../redux/slices/announcements";
+import { IAnnouncementFormValues } from "./CreateAnnouncement.types";
 import {
   AnnouncementSchema,
   announcementFormInitValues,
 } from "./CreateAnnouncement.constants";
 
 export const CreateAnnouncement: FC = () => {
+  const dispatch = useAppDispatch();
+
+  const handleSubmit = (values: IAnnouncementFormValues) => {
+    const formData = new FormData();
+    formData.append("title", values.title);
+    formData.append("description", values.description);
+    formData.append("model", values.model);
+    formData.append("manufacturer", values.manufacturer);
+    formData.append("price", "1000");
+    Object.values(values.images).forEach((img: any) => {
+      formData.append("files", img);
+    });
+
+    dispatch(createAnnouncement(formData));
+  };
+
+  // TODO: change hardcoded fields to dynamic and get data for selects
+
   return (
     <Formik
       initialValues={announcementFormInitValues}
       validationSchema={AnnouncementSchema}
-      onSubmit={(values) => {
-        console.log("submitted");
-        console.log("%c values ===>", "color: #90ee90", values);
-      }}
+      onSubmit={handleSubmit}
     >
       {({
         errors,
@@ -28,6 +46,57 @@ export const CreateAnnouncement: FC = () => {
       }) => (
         <div className="CreateAnnouncement d-flex align-items-center flex-column mt-5">
           <Form onSubmit={handleSubmit} noValidate>
+            <Form.Group className="mb-3" controlId="manufacturer">
+              <Form.Select
+                onBlur={handleBlur}
+                value={values.manufacturer}
+                onChange={handleChange}
+                isValid={touched.manufacturer && !errors.manufacturer}
+                isInvalid={touched.manufacturer && !!errors.manufacturer}
+              >
+                <option>Select Manufacturer</option>
+                <option value="1">Mercedes Benz</option>
+                <option value="2">BMW</option>
+                <option value="3">Audi</option>
+              </Form.Select>
+              <Form.Control.Feedback type="invalid">
+                {errors.manufacturer}
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="model">
+              <Form.Select
+                onBlur={handleBlur}
+                value={values.model}
+                onChange={handleChange}
+                isValid={touched.model && !errors.model}
+                isInvalid={touched.model && !!errors.model}
+              >
+                <option>Select Model</option>
+                <option value="1">C300</option>
+                <option value="2">C43</option>
+                <option value="3">C63</option>
+              </Form.Select>
+              <Form.Control.Feedback type="invalid">
+                {errors.model}
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="price">
+              <Form.Control
+                type="number"
+                onBlur={handleBlur}
+                placeholder="Price"
+                onChange={handleChange}
+                value={values.price ?? ""}
+                isValid={touched.price && !errors.price}
+                isInvalid={touched.price && !!errors.price}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.price}
+              </Form.Control.Feedback>
+            </Form.Group>
+
             <Form.Group className="mb-3" controlId="title">
               <Form.Control
                 onBlur={handleBlur}
@@ -57,11 +126,30 @@ export const CreateAnnouncement: FC = () => {
               </Form.Control.Feedback>
             </Form.Group>
 
-            {/* TODO: HOVO continue form here */}
-            <Form.Group controlId="formFileMultiple" className="mb-3">
-              <Form.Label>Upload photos of your car </Form.Label>
-              <Form.Control type="file" multiple />
+            <Form.Group controlId="images" className="mb-3">
+              <Form.Label>Upload photos of your car</Form.Label>
+              <Form.Control
+                multiple
+                type="file"
+                name="images"
+                accept="image/*"
+                onChange={(event) => {
+                  console.log("%c event ===>", "color: #90ee90", event);
+                  handleChange({
+                    target: {
+                      name: "images",
+                      value: (event.target as HTMLInputElement).files,
+                    },
+                  });
+                }}
+                isValid={touched.images && !errors.images}
+                isInvalid={touched.images && !!errors.images}
+              />
             </Form.Group>
+
+            <Button type="submit" variant="primary">
+              <span>Register</span>
+            </Button>
           </Form>
         </div>
       )}
