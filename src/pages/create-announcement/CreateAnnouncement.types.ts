@@ -1,5 +1,5 @@
 export interface IAnnouncementFormValues {
-  images: any;
+  files: any;
   title: string;
   model: string;
   price?: number;

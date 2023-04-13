@@ -21,8 +21,8 @@ export const CreateAnnouncement: FC = () => {
     formData.append("model", values.model);
     formData.append("manufacturer", values.manufacturer);
     formData.append("price", "1000");
-    Object.values(values.images).forEach((img: any) => {
-      formData.append("files", img);
+    Object.values(values.files).forEach((file: any) => {
+      formData.append("files", file);
     });
 
     dispatch(createAnnouncement(formData));
@@ -126,24 +126,24 @@ export const CreateAnnouncement: FC = () => {
               </Form.Control.Feedback>
             </Form.Group>
 
-            <Form.Group controlId="images" className="mb-3">
+            <Form.Group controlId="files" className="mb-3">
               <Form.Label>Upload photos of your car</Form.Label>
               <Form.Control
                 multiple
                 type="file"
-                name="images"
+                name="files"
                 accept="image/*"
                 onChange={(event) => {
                   console.log("%c event ===>", "color: #90ee90", event);
                   handleChange({
                     target: {
-                      name: "images",
+                      name: "files",
                       value: (event.target as HTMLInputElement).files,
                     },
                   });
                 }}
-                isValid={touched.images && !errors.images}
-                isInvalid={touched.images && !!errors.images}
+                isValid={touched.files && !errors.files}
+                isInvalid={touched.files && !!errors.files}
               />
             </Form.Group>
 

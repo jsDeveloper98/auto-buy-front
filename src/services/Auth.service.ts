@@ -10,6 +10,7 @@ class AuthS {
         },
         body: JSON.stringify(values),
       });
+      console.log("sdkjuasd");
 
       const jsonRes = await res.json();
 

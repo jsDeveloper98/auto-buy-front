@@ -5,7 +5,7 @@ import { IAnnouncementFormValues } from "./CreateAnnouncement.types";
 export const AnnouncementSchema = object().shape({
   model: string().required("Required"),
   manufacturer: string().required("Required"),
-  images: mixed().required("Required"),
+  files: mixed().required("Required"),
   title: string()
     .min(6, "Too Short!")
     .max(30, "Too Long!")
@@ -19,7 +19,7 @@ export const AnnouncementSchema = object().shape({
 export const announcementFormInitValues: IAnnouncementFormValues = {
   model: "",
   title: "",
-  images: null,
+  files: null,
   description: "",
   price: undefined,
   manufacturer: "",
