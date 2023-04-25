@@ -9,9 +9,8 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { regFormInitValues, RegisterSchema } from "./Register.constants";
 
 export const Register: FC = () => {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
   const { error, loading } = useAppSelector((state) => state.users);
 
   return (
@@ -19,9 +18,12 @@ export const Register: FC = () => {
       initialValues={regFormInitValues}
       validationSchema={RegisterSchema}
       onSubmit={(values) =>
-        dispatch(createUser(values)).then((res) => {
-          navigate("/");
-        })
+        dispatch(createUser(values))
+          .unwrap()
+          .then((res) => {
+            localStorage.setItem("userData", JSON.stringify(res.data));
+            navigate("/");
+          })
       }
     >
       {({

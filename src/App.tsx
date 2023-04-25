@@ -7,6 +7,7 @@ import { NavBar } from "./components";
 import { useAppDispatch } from "./redux/hooks";
 import { checkLogin } from "./redux/slices/users";
 import { getFilteredRoutesPaths } from "./routes/helpers";
+import { getCarModels, getCarMakes } from "./redux/slices/cars";
 import { ConfirmationModal } from "./components/confirmation-modal";
 
 export const App = () => {
@@ -15,16 +16,27 @@ export const App = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    dispatch(checkLogin());
+    const userData = localStorage.getItem("userData");
+    if (userData) {
+      dispatch(checkLogin(JSON.parse(userData)));
+    }
   }, [dispatch]);
 
   const handleConfirmAction = (actionType: string): void => {
     const availableRoutes = getFilteredRoutesPaths();
 
     if (actionType === "logout" && !availableRoutes.includes(pathname)) {
+      localStorage.removeItem("userData");
       navigate("/login");
     }
   };
+
+  // TODO: find another api or buy subscription in order to get all car models from all years
+  // TODO: but while this project in development implement filtering with Years in frontend and use only free api
+  useEffect(() => {
+    dispatch(getCarMakes());
+    dispatch(getCarModels());
+  }, [dispatch]);
 
   return (
     <div className="App">

@@ -1,10 +1,10 @@
-import { FC } from "react";
-import { Button, Form } from "react-bootstrap";
+import { FC, useState } from "react";
+import { Alert, Button, Form, Spinner } from "react-bootstrap";
 
 import { Formik } from "formik";
 
-import { useAppDispatch } from "../../redux/hooks";
-import { createAnnouncement } from "../../redux/slices/announcements";
+import { useAppSelector } from "../../redux/hooks";
+import { AnnouncementService } from "../../services";
 import { IAnnouncementFormValues } from "./CreateAnnouncement.types";
 import {
   AnnouncementSchema,
@@ -12,29 +12,53 @@ import {
 } from "./CreateAnnouncement.constants";
 
 export const CreateAnnouncement: FC = () => {
-  const dispatch = useAppDispatch();
+  const [error, setError] = useState<string>();
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const {
+    data: { token },
+  } = useAppSelector((state) => state.users);
+  const {
+    carMakes: { data: carMakesData },
+    carModels: { data: carModelsData },
+  } = useAppSelector((state) => state.cars.data);
 
   const handleSubmit = (values: IAnnouncementFormValues) => {
     const formData = new FormData();
+    formData.append("make", values.make);
     formData.append("title", values.title);
     formData.append("description", values.description);
     formData.append("model", values.model);
-    formData.append("manufacturer", values.manufacturer);
-    formData.append("price", "1000");
     Object.values(values.files).forEach((file: any) => {
       formData.append("files", file);
     });
 
-    dispatch(createAnnouncement(formData));
+    if (values.price) {
+      formData.append("price", String(values.price));
+    }
+
+    createAnnouncement(formData);
   };
 
-  // TODO: change hardcoded fields to dynamic and get data for selects
+  const createAnnouncement = async (values: FormData) => {
+    setLoading(true);
+
+    try {
+      await AnnouncementService.create(values, token);
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <Formik
-      initialValues={announcementFormInitValues}
-      validationSchema={AnnouncementSchema}
       onSubmit={handleSubmit}
+      validationSchema={AnnouncementSchema}
+      initialValues={announcementFormInitValues}
     >
       {({
         errors,
@@ -45,22 +69,33 @@ export const CreateAnnouncement: FC = () => {
         handleSubmit,
       }) => (
         <div className="CreateAnnouncement d-flex align-items-center flex-column mt-5">
+          {error && (
+            <Alert key="danger" variant="danger">
+              {error}
+            </Alert>
+          )}
+
           <Form onSubmit={handleSubmit} noValidate>
-            <Form.Group className="mb-3" controlId="manufacturer">
+            <Form.Group className="mb-3" controlId="make">
               <Form.Select
                 onBlur={handleBlur}
-                value={values.manufacturer}
+                value={values.make}
                 onChange={handleChange}
-                isValid={touched.manufacturer && !errors.manufacturer}
-                isInvalid={touched.manufacturer && !!errors.manufacturer}
+                isValid={touched.make && !errors.make}
+                isInvalid={touched.make && !!errors.make}
               >
-                <option>Select Manufacturer</option>
-                <option value="1">Mercedes Benz</option>
-                <option value="2">BMW</option>
-                <option value="3">Audi</option>
+                <option value="" disabled>
+                  Select Make
+                </option>
+
+                {carMakesData.map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.name}
+                  </option>
+                ))}
               </Form.Select>
               <Form.Control.Feedback type="invalid">
-                {errors.manufacturer}
+                {errors.make}
               </Form.Control.Feedback>
             </Form.Group>
 
@@ -69,13 +104,19 @@ export const CreateAnnouncement: FC = () => {
                 onBlur={handleBlur}
                 value={values.model}
                 onChange={handleChange}
+                disabled={!values.make}
                 isValid={touched.model && !errors.model}
                 isInvalid={touched.model && !!errors.model}
               >
-                <option>Select Model</option>
-                <option value="1">C300</option>
-                <option value="2">C43</option>
-                <option value="3">C63</option>
+                <option value="" disabled>
+                  Select Model
+                </option>
+
+                {carModelsData.map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.name}
+                  </option>
+                ))}
               </Form.Select>
               <Form.Control.Feedback type="invalid">
                 {errors.model}
@@ -134,7 +175,6 @@ export const CreateAnnouncement: FC = () => {
                 name="files"
                 accept="image/*"
                 onChange={(event) => {
-                  console.log("%c event ===>", "color: #90ee90", event);
                   handleChange({
                     target: {
                       name: "files",
@@ -147,8 +187,21 @@ export const CreateAnnouncement: FC = () => {
               />
             </Form.Group>
 
-            <Button type="submit" variant="primary">
-              <span>Register</span>
+            <Button type="submit" variant="primary" disabled={loading}>
+              {loading ? (
+                <span>
+                  <Spinner
+                    as="span"
+                    size="sm"
+                    role="status"
+                    animation="border"
+                    aria-hidden="true"
+                  />
+                  <span className="visually-hidden">Loading...</span>
+                </span>
+              ) : (
+                <span>Publish</span>
+              )}
             </Button>
           </Form>
         </div>

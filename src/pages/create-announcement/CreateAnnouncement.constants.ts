@@ -1,26 +1,33 @@
-import { mixed, object, string } from "yup";
+import { mixed, number, object, string } from "yup";
 
 import { IAnnouncementFormValues } from "./CreateAnnouncement.types";
+import {
+  INPUT_TYPE_MAX_LENGTH,
+  INPUT_TYPE_MIN_LENGTH,
+  TEXTAREA_TYPE_MIN_LENGTH,
+  TEXTAREA_TYPE_MAX_LENGTH,
+} from "../../constants";
 
 export const AnnouncementSchema = object().shape({
-  model: string().required("Required"),
-  manufacturer: string().required("Required"),
   files: mixed().required("Required"),
+  make: string().required("Required"),
+  model: string().required("Required"),
+  price: number().nullable("Field supports only number"),
   title: string()
-    .min(6, "Too Short!")
-    .max(30, "Too Long!")
+    .min(INPUT_TYPE_MIN_LENGTH, "Too Short!")
+    .max(INPUT_TYPE_MAX_LENGTH, "Too Long!")
     .required("Required"),
   description: string()
-    .min(20, "Too Short!")
-    .max(400, "Too Long!")
+    .min(TEXTAREA_TYPE_MIN_LENGTH, "Too Short!")
+    .max(TEXTAREA_TYPE_MAX_LENGTH, "Too Long!")
     .required("Required"),
 });
 
 export const announcementFormInitValues: IAnnouncementFormValues = {
+  make: "",
   model: "",
   title: "",
   files: null,
   description: "",
   price: undefined,
-  manufacturer: "",
 };

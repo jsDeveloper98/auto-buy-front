@@ -1,28 +1,18 @@
-// TODO: finish announcements service creation
+import { request } from "../utils";
+import { BASE_URL } from "../constants";
+import { IAnnouncement, ISuccessResponse } from "../types";
 
 class AnnouncementS {
-  async create(values: FormData) {
-    try {
-      console.log("%c values ===>", "color: #90ee90", values);
-      const res = await fetch("http://localhost:3000/announcements", {
-        method: "POST",
+  async create(values: FormData, token?: string) {
+    return request<ISuccessResponse<IAnnouncement>>({
+      serializeToJson: false,
+      url: `${BASE_URL}/announcements`,
+      options: {
         body: values,
-      });
-
-      console.log("%c res ===>", "color: #90ee90", res);
-
-      const jsonRes = await res.json();
-
-      console.log("%c jsonRes ===>", "color: #90ee90", jsonRes);
-
-      if (!res.ok) {
-        throw new Error(jsonRes.message);
-      }
-
-      return jsonRes;
-    } catch (e: any) {
-      throw new Error(e.message);
-    }
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+      },
+    });
   }
 }
 
