@@ -21,9 +21,9 @@ class CarsS {
     });
   }
 
-  async getModels() {
+  async getModels(make: string) {
     return request<ISuccessResponse<ICarModel[]>>({
-      url: `${RAPID_API_BASE_URL}/models?direction=asc&sort=id&make=BMW&year=2020`,
+      url: `${RAPID_API_BASE_URL}/models?direction=asc&sort=id&make=${make}&year=2020`,
       options: {
         headers: {
           "X-RapidAPI-Key": X_RAPID_API_KEY,

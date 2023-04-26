@@ -7,8 +7,9 @@ export const getCarMakes = createAsyncThunk("cars/getMakes", async () =>
   CarsService.getMakes()
 );
 
-export const getCarModels = createAsyncThunk("cars/getModels", async () =>
-  CarsService.getModels()
+export const getCarModels = createAsyncThunk(
+  "cars/getModels",
+  async (make: string) => CarsService.getModels(make)
 );
 
 interface ICarMakeData {

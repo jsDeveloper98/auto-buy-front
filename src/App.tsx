@@ -6,8 +6,8 @@ import { AppRoutes } from "./routes";
 import { NavBar } from "./components";
 import { useAppDispatch } from "./redux/hooks";
 import { checkLogin } from "./redux/slices/users";
+import { getCarMakes } from "./redux/slices/cars";
 import { getFilteredRoutesPaths } from "./routes/helpers";
-import { getCarModels, getCarMakes } from "./redux/slices/cars";
 import { ConfirmationModal } from "./components/confirmation-modal";
 
 export const App = () => {
@@ -35,7 +35,6 @@ export const App = () => {
   // TODO: but while this project in development implement filtering with Years in frontend and use only free api
   useEffect(() => {
     dispatch(getCarMakes());
-    dispatch(getCarModels());
   }, [dispatch]);
 
   return (

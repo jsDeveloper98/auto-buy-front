@@ -11,6 +11,7 @@ import {
 export const AnnouncementSchema = object().shape({
   files: mixed().required("Required"),
   make: string().required("Required"),
+  year: number().required("Required"),
   model: string().required("Required"),
   price: number().nullable("Field supports only number"),
   title: string()
@@ -27,6 +28,7 @@ export const announcementFormInitValues: IAnnouncementFormValues = {
   make: "",
   model: "",
   title: "",
+  year: null,
   files: null,
   description: "",
   price: undefined,

@@ -4,5 +4,6 @@ export interface IAnnouncementFormValues {
   title: string;
   model: string;
   price?: number;
+  year: number | null;
   description: string;
 }
