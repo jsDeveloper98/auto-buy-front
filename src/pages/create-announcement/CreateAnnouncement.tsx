@@ -58,6 +58,7 @@ export const CreateAnnouncement: FC = () => {
     createAnnouncement(formData);
   };
 
+  // TODO: in the next step i should get and display all announcements for individual user
   // TODO: display success messages after successfully registration and announcement creation
   const {
     values,
