@@ -25,9 +25,12 @@ export const App = () => {
   const handleConfirmAction = (actionType: string): void => {
     const availableRoutes = getFilteredRoutesPaths();
 
-    if (actionType === "logout" && !availableRoutes.includes(pathname)) {
+    if (actionType === "logout") {
       localStorage.removeItem("userData");
-      navigate("/login");
+
+      if (!availableRoutes.includes(pathname)) {
+        navigate("/login");
+      }
     }
   };
 

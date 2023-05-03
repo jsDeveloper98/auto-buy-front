@@ -1,4 +1,4 @@
-export interface IRegisterData {
+export interface IAuthData {
   token?: string;
   userId?: string;
 }

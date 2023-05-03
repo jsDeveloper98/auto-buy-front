@@ -4,7 +4,7 @@ import { Alert, Button, Form, Spinner } from "react-bootstrap";
 
 import { Formik } from "formik";
 
-import { createUser } from "../../redux/slices/users";
+import { register } from "../../redux/slices/users";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { regFormInitValues, RegisterSchema } from "./Register.constants";
 
@@ -18,7 +18,7 @@ export const Register: FC = () => {
       initialValues={regFormInitValues}
       validationSchema={RegisterSchema}
       onSubmit={(values) =>
-        dispatch(createUser(values))
+        dispatch(register(values))
           .unwrap()
           .then((res) => {
             localStorage.setItem("userData", JSON.stringify(res.data));

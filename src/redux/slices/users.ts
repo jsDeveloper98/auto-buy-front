@@ -1,20 +1,28 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+import { IAuthData } from "./../../types";
 import { AuthService } from "../../services";
-import { IRegisterData } from "./../../types";
 import { IRegFormValues } from "../../pages/register/Register.types";
+import { ILoginFormValues } from "../../pages/login/Login.types";
 
-export const createUser = createAsyncThunk(
-  "users/create",
+export const register = createAsyncThunk(
+  "users/register",
   async (values: IRegFormValues) => {
     return AuthService.register(values);
   }
 );
 
+export const login = createAsyncThunk(
+  "users/login",
+  async (values: ILoginFormValues) => {
+    return AuthService.login(values);
+  }
+);
+
 const initialState: {
   error?: string;
+  data: IAuthData;
   loading: boolean;
-  data: IRegisterData;
 } = {
   data: {},
   error: "",
@@ -25,7 +33,7 @@ const usersSlice = createSlice({
   name: "users",
   initialState: initialState,
   reducers: {
-    checkLogin: (state, { payload }: PayloadAction<IRegisterData>) => {
+    checkLogin: (state, { payload }: PayloadAction<IAuthData>) => {
       state.data = payload;
     },
     logout: (state) => {
@@ -33,15 +41,28 @@ const usersSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(createUser.pending, (state) => {
+    builder.addCase(register.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(createUser.fulfilled, (state, { payload }) => {
+    builder.addCase(register.fulfilled, (state, { payload }) => {
       state.error = "";
       state.loading = false;
       state.data = payload.data;
     });
-    builder.addCase(createUser.rejected, (state, { error }) => {
+    builder.addCase(register.rejected, (state, { error }) => {
+      state.loading = false;
+      state.error = error.message;
+    });
+
+    builder.addCase(login.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(login.fulfilled, (state, { payload }) => {
+      state.error = "";
+      state.loading = false;
+      state.data = payload.data;
+    });
+    builder.addCase(login.rejected, (state, { error }) => {
       state.loading = false;
       state.error = error.message;
     });
