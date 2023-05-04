@@ -1,6 +1,6 @@
 import { object, string } from "yup";
 
-import { IRegFormValues } from "./Register.types";
+import { IRegFormValues } from "./RegisterForm.types";
 import { INPUT_TYPE_MIN_LENGTH, INPUT_TYPE_MAX_LENGTH } from "../../constants";
 
 export const RegisterSchema = object().shape({

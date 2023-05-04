@@ -2,8 +2,8 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { IAuthData } from "./../../types";
 import { AuthService } from "../../services";
-import { IRegFormValues } from "../../pages/register/Register.types";
-import { ILoginFormValues } from "../../pages/login/Login.types";
+import { ILoginFormValues } from "../../components/login-form/LoginForm.types";
+import { IRegFormValues } from "../../components/register-form/RegisterForm.types";
 
 export const register = createAsyncThunk(
   "users/register",

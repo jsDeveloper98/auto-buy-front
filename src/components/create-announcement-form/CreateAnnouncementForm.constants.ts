@@ -1,6 +1,6 @@
 import { mixed, number, object, string } from "yup";
 
-import { IAnnouncementFormValues } from "./CreateAnnouncement.types";
+import { IAnnouncementFormValues } from "./CreateAnnouncementForm.types";
 import {
   INPUT_TYPE_MAX_LENGTH,
   INPUT_TYPE_MIN_LENGTH,

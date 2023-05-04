@@ -1,8 +1,8 @@
 import { request } from "../utils";
 import { BASE_URL } from "../constants";
 import { IAuthData, ISuccessResponse } from "../types";
-import { ILoginFormValues } from "../pages/login/Login.types";
-import { IRegFormValues } from "../pages/register/Register.types";
+import { ILoginFormValues } from "../components/login-form/LoginForm.types";
+import { IRegFormValues } from "../components/register-form/RegisterForm.types";
 
 class AuthS {
   async register(values: IRegFormValues) {
