@@ -17,7 +17,7 @@ export const ConfirmationModal: FC<IProps> = ({ onConfirm }) => {
   const { data, isOpen } = useAppSelector((state) => state.confirmationModal);
 
   return (
-    <>
+    <div className="ConfirmationModal">
       {isOpen && <div style={maskStyles} />}
       <Modal show={isOpen}>
         <Modal.Header>
@@ -49,6 +49,6 @@ export const ConfirmationModal: FC<IProps> = ({ onConfirm }) => {
           </Button>
         </Modal.Footer>
       </Modal>
-    </>
+    </div>
   );
 };

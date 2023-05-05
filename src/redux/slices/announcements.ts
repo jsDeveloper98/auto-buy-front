@@ -1,41 +1,57 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-import { AnnouncementService } from "../../services";
 import { IAnnouncement } from "../../types";
+import { AnnouncementService } from "../../services";
 
-export const createAnnouncement = createAsyncThunk(
-  "announcements/create",
-  async ({ values, token }: { values: FormData; token?: string }) => {
-    return AnnouncementService.create(values, token);
+export const getUserAnnouncements = createAsyncThunk(
+  "announcements/get/user",
+  async (token?: string) => {
+    return AnnouncementService.getUserAnnouncements(token);
   }
 );
 
-const initialState: {
+interface IAnnouncementData {
   error?: string;
   loading: boolean;
-  data: IAnnouncement;
-} = {
-  error: "",
-  loading: false,
-  data: {} as IAnnouncement,
+  data: IAnnouncement[];
+}
+
+interface IData {
+  announcements: IAnnouncementData;
+  userAnnouncements: IAnnouncementData;
+}
+
+const initialState = {
+  data: {
+    announcements: {
+      error: "",
+      data: [],
+      loading: false,
+    },
+    userAnnouncements: {
+      error: "",
+      data: [],
+      loading: false,
+    },
+  } as IData,
 };
 
 const announcementsSlice = createSlice({
-  name: "users",
+  name: "announcements",
   initialState: initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(createAnnouncement.pending, (state) => {
-      state.loading = true;
+    builder.addCase(getUserAnnouncements.pending, (state) => {
+      state.data.userAnnouncements.loading = true;
     });
-    builder.addCase(createAnnouncement.fulfilled, (state, { payload }) => {
-      state.error = "";
-      state.loading = false;
-      state.data = payload.data;
+    builder.addCase(getUserAnnouncements.fulfilled, (state, { payload }) => {
+      state.data.userAnnouncements.error = "";
+      state.data.userAnnouncements.loading = false;
+      state.data.userAnnouncements.data = payload.data;
     });
-    builder.addCase(createAnnouncement.rejected, (state, { error }) => {
-      state.loading = false;
-      state.error = error.message;
+    builder.addCase(getUserAnnouncements.rejected, (state, { error }) => {
+      state.data.userAnnouncements.loading = false;
+      state.data.userAnnouncements.error = error.message;
     });
   },
 });

@@ -80,7 +80,7 @@ export const CreateAnnouncementForm: FC = () => {
 
   return (
     <fieldset disabled={loading}>
-      <div className="CreateAnnouncement d-flex align-items-center flex-column mt-5">
+      <div className="CreateAnnouncementForm d-flex align-items-center flex-column mt-5">
         {error && (
           <Alert key="danger" variant="danger">
             {error}

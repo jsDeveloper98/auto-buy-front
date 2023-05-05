@@ -14,6 +14,15 @@ class AnnouncementS {
       },
     });
   }
+
+  async getUserAnnouncements(token?: string) {
+    return request<ISuccessResponse<IAnnouncement[]>>({
+      url: `${BASE_URL}/announcements/user`,
+      options: {
+        headers: { Authorization: `Bearer ${token}` },
+      },
+    });
+  }
 }
 
 export const AnnouncementService = new AnnouncementS();

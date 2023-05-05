@@ -1,10 +1,22 @@
-import { Card } from "../card";
+import { FC } from "react";
 
-export const AnnouncementsList = () => {
+import { Card } from "../card";
+import { IAnnouncement } from "../../types";
+
+interface IProps {
+  data: IAnnouncement[];
+}
+
+// TODO: continue and correct hte styles of this component
+export const AnnouncementsList: FC<IProps> = ({ data }) => {
   return (
-    <div>
-      <Card />
-      <div>Card</div>
+    <div className="AnnouncementsList">
+      {data.map((item) => (
+        <div key={item._id}>
+          <Card />
+          <div>{item.make}</div>
+        </div>
+      ))}
     </div>
   );
 };

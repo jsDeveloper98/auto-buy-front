@@ -6,7 +6,7 @@ interface RequestOptions {
 
 interface IRequest {
   url: string;
-  options: RequestOptions;
+  options?: RequestOptions;
   serializeToJson?: boolean;
 }
 
