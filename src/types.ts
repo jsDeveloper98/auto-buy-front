@@ -21,16 +21,11 @@ export interface IAnnouncement {
   description: string;
 }
 
-export interface ICarMake {
-  id: number;
-  name: string;
-}
-
-export interface ICarModel {
-  id: number;
-  name: string;
-  make_id: number;
-}
+// TODO: remove in feature if useless
+// export interface ICarsList {
+//   brand: string;
+//   models: string[];
+// }
 
 export interface ISuccessResponse<T> {
   data: T;

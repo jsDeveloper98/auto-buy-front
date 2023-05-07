@@ -5,7 +5,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { AppRoutes } from "./routes";
 import { useAppDispatch } from "./redux/hooks";
 import { checkLogin } from "./redux/slices/users";
-import { getCarMakes } from "./redux/slices/cars";
 import { NavBar, ConfirmationModal } from "./components";
 import { getFilteredRoutesPaths } from "./routes/helpers";
 
@@ -32,12 +31,6 @@ export const App = () => {
       }
     }
   };
-
-  // TODO: find another api or buy subscription in order to get all car models from all years
-  // TODO: but while this project in development implement filtering with Years in frontend and use only free api
-  useEffect(() => {
-    dispatch(getCarMakes());
-  }, [dispatch]);
 
   return (
     <div className="App">

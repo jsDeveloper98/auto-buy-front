@@ -3,9 +3,9 @@ import { Alert, Button, Form, Spinner } from "react-bootstrap";
 
 import { useFormik } from "formik";
 
-import { getCarModels } from "../../redux/slices/cars";
+import { CARS_LIST } from "../../constants";
+import { useAppSelector } from "../../redux/hooks";
 import { AnnouncementService } from "../../services";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { getAllYearsFrom1900ToCurrentYearPlusOne } from "../../utils";
 import { IAnnouncementFormValues } from "./CreateAnnouncementForm.types";
 import {
@@ -14,17 +14,13 @@ import {
 } from "./CreateAnnouncementForm.constants";
 
 export const CreateAnnouncementForm: FC = () => {
-  const dispatch = useAppDispatch();
   const [error, setError] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
+  const [carModels, setCarModels] = useState<string[]>([]);
 
   const {
     data: { token },
   } = useAppSelector((state) => state.users);
-  const {
-    carMakes: { data: carMakesData },
-    carModels: { data: carModelsData },
-  } = useAppSelector((state) => state.cars.data);
 
   const createAnnouncement = async (values: FormData) => {
     setLoading(true);
@@ -75,7 +71,12 @@ export const CreateAnnouncementForm: FC = () => {
 
   const handleMakeChange = (event: ChangeEvent<HTMLSelectElement>) => {
     handleChange(event);
-    dispatch(getCarModels(event.target.value));
+
+    const car = CARS_LIST.find((item) => item.brand === event.target.value);
+
+    if (car) {
+      setCarModels(car?.models);
+    }
   };
 
   return (
@@ -100,9 +101,9 @@ export const CreateAnnouncementForm: FC = () => {
                 Select Make
               </option>
 
-              {carMakesData.map((item) => (
-                <option key={item.id} value={item.name}>
-                  {item.name}
+              {CARS_LIST.map((item) => (
+                <option key={item.brand} value={item.brand}>
+                  {item.brand}
                 </option>
               ))}
             </Form.Select>
@@ -124,9 +125,9 @@ export const CreateAnnouncementForm: FC = () => {
                 Select Model
               </option>
 
-              {carModelsData.map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.name}
+              {carModels.map((model) => (
+                <option key={model} value={model}>
+                  {model}
                 </option>
               ))}
             </Form.Select>
