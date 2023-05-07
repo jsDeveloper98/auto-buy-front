@@ -6,8 +6,6 @@ import {
   RAPID_API_BASE_URL,
 } from "../constants";
 
-// TODO: change this hardcoded query params to dynamic which will be applied by filer
-
 class CarsS {
   async getMakes() {
     return request<ISuccessResponse<ICarMake[]>>({

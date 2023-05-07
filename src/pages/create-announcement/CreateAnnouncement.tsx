@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { CreateAnnouncementForm } from "../../components/create-announcement-form";
+import { CreateAnnouncementForm } from "../../components";
 
 export const CreateAnnouncement: FC = () => (
   <div className="CreateAnnouncement">

@@ -7,7 +7,7 @@ interface IProps {
   data: IAnnouncement[];
 }
 
-// TODO: continue and correct hte styles of this component
+// TODO: continue and correct styles of this component
 export const AnnouncementsList: FC<IProps> = ({ data }) => {
   return (
     <div className="AnnouncementsList">
