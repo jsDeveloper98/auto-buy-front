@@ -3,7 +3,7 @@ export interface IAuthData {
   userId?: string;
 }
 
-interface IFile {
+export interface IFile {
   url: string;
   path: string;
   filename: string;
@@ -11,6 +11,7 @@ interface IFile {
 
 export interface IAnnouncement {
   _id: string;
+  year: number;
   make: string;
   user: string;
   model: string;
@@ -20,12 +21,6 @@ export interface IAnnouncement {
   createdAt: string;
   description: string;
 }
-
-// TODO: remove in feature if useless
-// export interface ICarsList {
-//   brand: string;
-//   models: string[];
-// }
 
 export interface ISuccessResponse<T> {
   data: T;

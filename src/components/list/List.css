@@ -1,0 +1,25 @@
+.List {
+  display: grid;
+  row-gap: 50px;
+  justify-content: space-between;
+  grid-template-columns: auto auto auto auto;
+}
+
+@media only screen and (max-width: 1400px) {
+  .List {
+    grid-template-columns: auto auto auto;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .List {
+    grid-template-columns: auto auto;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .List {
+    grid-template-columns: auto;
+    justify-content: space-around;
+  }
+}
