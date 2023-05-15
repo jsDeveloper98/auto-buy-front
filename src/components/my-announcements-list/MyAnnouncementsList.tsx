@@ -3,12 +3,12 @@ import { Spinner } from "react-bootstrap";
 
 import { DateTime } from "luxon";
 
-import { List } from "../../components";
+import { List } from "..";
 import { ICard, ICardChild } from "../card/Card.types";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { getUserAnnouncements } from "../../redux/slices/announcements";
 
-export const AnnouncementList: FC = () => {
+export const MyAnnouncementsList: FC = () => {
   const dispatch = useAppDispatch();
 
   const {
@@ -80,7 +80,7 @@ export const AnnouncementList: FC = () => {
   );
 
   return (
-    <div className="AnnouncementList">
+    <div className="MyAnnouncementsList">
       {loading ? (
         <Spinner
           animation="grow"

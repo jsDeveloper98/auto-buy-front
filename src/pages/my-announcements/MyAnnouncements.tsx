@@ -1,11 +1,11 @@
 import { FC } from "react";
 
-import { AnnouncementList } from "../../components";
+import { MyAnnouncementsList } from "../../components";
 
 export const MyAnnouncements: FC = () => {
   return (
     <div className="MyAnnouncements">
-      <AnnouncementList />
+      <MyAnnouncementsList />
     </div>
   );
 };
