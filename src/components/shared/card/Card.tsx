@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Card as BCard, ListGroup } from "react-bootstrap";
 
 import { ICard } from "./Card.types";
-import { BASE_URL } from "../../constants";
+import { BASE_URL } from "../../../constants";
 
 interface IProps {
   item: ICard;
@@ -11,6 +11,7 @@ interface IProps {
 
 export const Card: FC<IProps> = ({ item }) => {
   const { pathname } = useLocation();
+
   return (
     <Link
       className="Card"

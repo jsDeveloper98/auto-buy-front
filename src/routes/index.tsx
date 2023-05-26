@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Route, Routes } from "react-router-dom";
 
-import { filterRoutes } from "./helpers";
+import { getFilteredRoutes } from "./helpers";
 import { useAppSelector } from "../redux/hooks";
 
 export const AppRoutes: FC = () => {
@@ -11,7 +11,7 @@ export const AppRoutes: FC = () => {
 
   return (
     <Routes>
-      {filterRoutes(token).map(({ path, Component }) => (
+      {getFilteredRoutes(token).map(({ path, Component }) => (
         <Route key={path} path={path} element={<Component />} />
       ))}
     </Routes>

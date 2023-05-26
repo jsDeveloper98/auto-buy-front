@@ -1,27 +1,11 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button, Container, Form, Nav, Navbar } from "react-bootstrap";
 
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { openConfirmationModal } from "../../redux/slices/confirmationModal";
+import { useNavBar } from "./NavBar.hooks";
 
 export const NavBar: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const { pathname } = useLocation();
-  const {
-    data: { token },
-  } = useAppSelector((state) => state.users);
-
-  const pathIsActive = (path: string): boolean => pathname === path;
-
-  const openLogoutConfirmation = (): void => {
-    dispatch(
-      openConfirmationModal({
-        title: "Your'e sure that you want to logout?",
-        confirmActionName: "logout",
-      })
-    );
-  };
+  const { openLogoutConfirmation, pathIsActive, token } = useNavBar();
 
   return (
     <div className="NavBar">

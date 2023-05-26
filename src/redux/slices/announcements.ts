@@ -13,6 +13,7 @@ export const getUserAnnouncements = createAsyncThunk(
 interface IAnnouncementData {
   error?: string;
   loading: boolean;
+  fetched: boolean;
   data: IAnnouncement[];
 }
 
@@ -26,11 +27,13 @@ const initialState = {
     announcements: {
       error: "",
       data: [],
+      fetched: false,
       loading: false,
     },
     userAnnouncements: {
       error: "",
       data: [],
+      fetched: false,
       loading: false,
     },
   } as IData,
@@ -46,6 +49,7 @@ const announcementsSlice = createSlice({
     });
     builder.addCase(getUserAnnouncements.fulfilled, (state, { payload }) => {
       state.data.userAnnouncements.error = "";
+      state.data.userAnnouncements.fetched = true;
       state.data.userAnnouncements.loading = false;
       state.data.userAnnouncements.data = payload.data;
     });

@@ -4,3 +4,4 @@ export * from "./register";
 export * from "./not-found";
 export * from "./my-announcements";
 export * from "./create-announcement";
+export * from "./announcement-details";

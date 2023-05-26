@@ -1,30 +1,19 @@
 import { FC } from "react";
-import { useNavigate } from "react-router-dom";
 import { Alert, Button, Form, Spinner } from "react-bootstrap";
 
 import { Formik } from "formik";
 
-import { login } from "../../redux/slices/users";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { useLoginForm } from "./LoginForm.hooks";
 import { LoginSchema, loginFormInitValues } from "./LoginForm.constants";
 
 export const LoginForm: FC = () => {
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const { error, loading } = useAppSelector((state) => state.users);
+  const { error, handleLogin, loading } = useLoginForm();
 
   return (
     <Formik
+      onSubmit={handleLogin}
       validationSchema={LoginSchema}
       initialValues={loginFormInitValues}
-      onSubmit={(values) => {
-        dispatch(login(values))
-          .unwrap()
-          .then((res) => {
-            localStorage.setItem("userData", JSON.stringify(res.data));
-            navigate("/");
-          });
-      }}
     >
       {({
         errors,

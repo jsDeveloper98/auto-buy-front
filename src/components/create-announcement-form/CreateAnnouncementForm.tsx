@@ -1,83 +1,18 @@
-import { ChangeEvent, FC, useState } from "react";
+import { FC } from "react";
 import { Alert, Button, Form, Spinner } from "react-bootstrap";
 
-import { useFormik } from "formik";
-
 import { CARS_LIST } from "../../constants";
-import { useAppSelector } from "../../redux/hooks";
-import { AnnouncementService } from "../../services";
 import { getAllYearsFrom1900ToCurrentYearPlusOne } from "../../utils";
-import { IAnnouncementFormValues } from "./CreateAnnouncementForm.types";
-import {
-  AnnouncementSchema,
-  announcementFormInitValues,
-} from "./CreateAnnouncementForm.constants";
+import { useCreateAnnouncementForm } from "./CreateAnnouncementForm.hooks";
 
 export const CreateAnnouncementForm: FC = () => {
-  const [error, setError] = useState<string>();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [carModels, setCarModels] = useState<string[]>([]);
-
   const {
-    data: { token },
-  } = useAppSelector((state) => state.users);
-
-  const createAnnouncement = async (values: FormData) => {
-    setLoading(true);
-
-    try {
-      await AnnouncementService.create(values, token);
-    } catch (err) {
-      if (err instanceof Error) {
-        setError(err.message);
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleSubmit = (values: IAnnouncementFormValues) => {
-    const formData = new FormData();
-    formData.append("make", values.make);
-    formData.append("title", values.title);
-    formData.append("model", values.model);
-    formData.append("year", String(values.year));
-    formData.append("description", values.description);
-    Object.values(values.files).forEach((file: any) => {
-      formData.append("files", file);
-    });
-
-    if (values.price) {
-      formData.append("price", String(values.price));
-    }
-
-    createAnnouncement(formData);
-  };
-
-  // TODO: in the next step i should get and display all announcements for individual user
-  // TODO: display success messages after successfully registration and announcement creation
-  const {
-    values,
-    errors,
-    touched,
-    handleBlur,
-    handleChange,
-    handleSubmit: handleFormikSubmit,
-  } = useFormik({
-    onSubmit: handleSubmit,
-    validationSchema: AnnouncementSchema,
-    initialValues: announcementFormInitValues,
-  });
-
-  const handleMakeChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    handleChange(event);
-
-    const car = CARS_LIST.find((item) => item.brand === event.target.value);
-
-    if (car) {
-      setCarModels(car?.models);
-    }
-  };
+    error,
+    loading,
+    carModels,
+    handleMakeChange,
+    formik: { handleSubmit, handleBlur, values, touched, errors, handleChange },
+  } = useCreateAnnouncementForm();
 
   return (
     <fieldset disabled={loading}>
@@ -88,7 +23,7 @@ export const CreateAnnouncementForm: FC = () => {
           </Alert>
         )}
 
-        <Form onSubmit={handleFormikSubmit} noValidate>
+        <Form onSubmit={handleSubmit} noValidate>
           <Form.Group className="mb-3" controlId="make">
             <Form.Select
               onBlur={handleBlur}

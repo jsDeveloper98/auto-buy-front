@@ -1,30 +1,19 @@
 import { FC } from "react";
-import { useNavigate } from "react-router-dom";
 import { Alert, Button, Form, Spinner } from "react-bootstrap";
 
 import { Formik } from "formik";
 
-import { register } from "../../redux/slices/users";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { useRegisterForm } from "./RegisterForm.hooks";
 import { regFormInitValues, RegisterSchema } from "./RegisterForm.constants";
 
 export const RegisterForm: FC = () => {
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const { error, loading } = useAppSelector((state) => state.users);
+  const { error, handleRegister, loading } = useRegisterForm();
 
   return (
     <Formik
       initialValues={regFormInitValues}
       validationSchema={RegisterSchema}
-      onSubmit={(values) =>
-        dispatch(register(values))
-          .unwrap()
-          .then((res) => {
-            localStorage.setItem("userData", JSON.stringify(res.data));
-            navigate("/");
-          })
-      }
+      onSubmit={handleRegister}
     >
       {({
         errors,

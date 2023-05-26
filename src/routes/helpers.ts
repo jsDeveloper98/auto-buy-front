@@ -1,7 +1,7 @@
 import { IRoutesConfig } from "./types";
 import { routesConfig } from "./constants";
 
-export const filterRoutes = (token?: string): IRoutesConfig[] => {
+export const getFilteredRoutes = (token?: string): IRoutesConfig[] => {
   return routesConfig.reduce((acc: IRoutesConfig[], route): IRoutesConfig[] => {
     if (route.type === "common") {
       return [...acc, route];
@@ -20,4 +20,4 @@ export const filterRoutes = (token?: string): IRoutesConfig[] => {
 };
 
 export const getFilteredRoutesPaths = (token?: string): string[] =>
-  filterRoutes(token).map((route) => route.path);
+  getFilteredRoutes(token).map((route) => route.path);

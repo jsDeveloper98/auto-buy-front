@@ -6,6 +6,7 @@ import {
   NotFound,
   MyAnnouncements,
   CreateAnnouncement,
+  AnnouncementDetails,
 } from "../pages";
 
 export const routesConfig: IRoutesConfig[] = [
@@ -38,5 +39,10 @@ export const routesConfig: IRoutesConfig[] = [
     path: "/create_announcement",
     type: "authorized",
     Component: CreateAnnouncement,
+  },
+  {
+    path: "/my_announcements/:announcementId",
+    type: "authorized",
+    Component: AnnouncementDetails,
   },
 ];
