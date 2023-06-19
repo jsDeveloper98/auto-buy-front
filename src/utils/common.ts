@@ -1,3 +1,5 @@
+import { IAuthData } from "../types";
+
 export const getAllYearsFrom1900ToCurrentYearPlusOne = (): number[] => {
   const startYear = 1900;
   const currentYear = new Date().getFullYear();
@@ -9,4 +11,14 @@ export const getAllYearsFrom1900ToCurrentYearPlusOne = (): number[] => {
   }
 
   return years;
+};
+
+export const getUserData = () => {
+  const userData = localStorage.getItem("userData");
+
+  if (!userData) {
+    throw new Error("No authorization");
+  }
+
+  return JSON.parse(userData) as IAuthData;
 };

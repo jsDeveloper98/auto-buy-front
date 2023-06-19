@@ -589,7 +589,6 @@ export const CARS_LIST = [
       "C T",
       "Citan",
       "CL",
-      "CL",
       "CLA",
       "CLC",
       "CLK Cabrio",

@@ -3,7 +3,6 @@ import { ChangeEvent, useState } from "react";
 import { useFormik } from "formik";
 
 import { CARS_LIST } from "../../constants";
-import { useAppSelector } from "../../redux/hooks";
 import { AnnouncementService } from "../../services";
 import { IAnnouncementFormValues } from "./CreateAnnouncementForm.types";
 import {
@@ -16,15 +15,11 @@ export const useCreateAnnouncementForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [carModels, setCarModels] = useState<string[]>([]);
 
-  const {
-    data: { token },
-  } = useAppSelector((state) => state.users);
-
   const createAnnouncement = async (values: FormData) => {
     setLoading(true);
 
     try {
-      await AnnouncementService.create(values, token);
+      await AnnouncementService.create(values);
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);

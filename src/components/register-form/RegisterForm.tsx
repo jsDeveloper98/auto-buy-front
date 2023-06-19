@@ -24,7 +24,7 @@ export const RegisterForm: FC = () => {
         handleSubmit,
       }) => (
         <fieldset disabled={loading}>
-          <div className="RegisterForm d-flex align-items-center flex-column mt-5">
+          <div className="RegisterForm d-flex align-items-center flex-column">
             {error && (
               <Alert key="danger" variant="danger">
                 {error}

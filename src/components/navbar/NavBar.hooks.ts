@@ -8,7 +8,7 @@ export const useNavBar = () => {
   const { pathname } = useLocation();
   const {
     data: { token },
-  } = useAppSelector((state) => state.users);
+  } = useAppSelector((state) => state.auth);
 
   const pathIsActive = (path: string): boolean => pathname === path;
 

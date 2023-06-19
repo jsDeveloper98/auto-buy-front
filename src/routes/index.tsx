@@ -7,7 +7,7 @@ import { useAppSelector } from "../redux/hooks";
 export const AppRoutes: FC = () => {
   const {
     data: { token },
-  } = useAppSelector((state) => state.users);
+  } = useAppSelector((state) => state.auth);
 
   return (
     <Routes>

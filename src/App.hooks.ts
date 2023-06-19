@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
+import { signin } from "./redux/slices/auth";
 import { useAppDispatch } from "./redux/hooks";
-import { checkLogin } from "./redux/slices/users";
 import { getFilteredRoutesPaths } from "./routes/helpers";
 
 export const useApp = () => {
@@ -13,7 +13,7 @@ export const useApp = () => {
   useEffect(() => {
     const userData = localStorage.getItem("userData");
     if (userData) {
-      dispatch(checkLogin(JSON.parse(userData)));
+      dispatch(signin(JSON.parse(userData)));
     }
   }, [dispatch]);
 

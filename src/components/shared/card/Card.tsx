@@ -19,10 +19,30 @@ export const Card: FC<IProps> = ({ item }) => {
       onClick={(e) => !item.isClickable && e.preventDefault()}
     >
       <BCard style={{ width: "18rem" }}>
-        <BCard.Img variant="top" src={`${BASE_URL}/${item.imgPath}`} />
+        <BCard.Img
+          variant="top"
+          src={`${BASE_URL}/${item.imgPath}`}
+          style={{
+            height: "150px",
+            objectFit: "cover",
+          }}
+        />
         <BCard.Body>
           <BCard.Title>{item.title}</BCard.Title>
-          {item.description && <BCard.Text>{item.description}</BCard.Text>}
+          {item.description && (
+            <BCard.Text
+              style={{
+                height: "50px",
+                WebkitLineClamp: 2, // Number of lines to display
+                overflow: "hidden",
+                display: "-webkit-box",
+                textOverflow: "ellipsis",
+                WebkitBoxOrient: "vertical",
+              }}
+            >
+              {item.description}
+            </BCard.Text>
+          )}
         </BCard.Body>
         <ListGroup className="list-group-flush">
           {item.children.map((childItem) => (

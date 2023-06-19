@@ -1,13 +1,13 @@
 import { useNavigate } from "react-router-dom";
 
-import { register } from "../../redux/slices/users";
+import { register } from "../../redux/slices/auth";
 import { IRegFormValues } from "./RegisterForm.types";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 
 export const useRegisterForm = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { error, loading } = useAppSelector((state) => state.users);
+  const { error, loading } = useAppSelector((state) => state.auth);
 
   const handleRegister = (values: IRegFormValues) => {
     dispatch(register(values))

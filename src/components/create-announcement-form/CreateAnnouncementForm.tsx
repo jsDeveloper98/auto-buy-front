@@ -15,8 +15,8 @@ export const CreateAnnouncementForm: FC = () => {
   } = useCreateAnnouncementForm();
 
   return (
-    <fieldset disabled={loading}>
-      <div className="CreateAnnouncementForm d-flex align-items-center flex-column mt-5">
+    <div className="CreateAnnouncementForm">
+      <fieldset disabled={loading}>
         {error && (
           <Alert key="danger" variant="danger">
             {error}
@@ -175,7 +175,7 @@ export const CreateAnnouncementForm: FC = () => {
             )}
           </Button>
         </Form>
-      </div>
-    </fieldset>
+      </fieldset>
+    </div>
   );
 };

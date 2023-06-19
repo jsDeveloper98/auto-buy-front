@@ -1,74 +1,53 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-import { IAuthData } from "./../../types";
-import { AuthService } from "../../services";
-import { ILoginFormValues } from "../../components/login-form/LoginForm.types";
-import { IRegFormValues } from "../../components/register-form/RegisterForm.types";
+import { UserService } from "../../services";
+import { IAnnouncement } from "./../../types";
 
-export const register = createAsyncThunk(
-  "users/register",
-  async (values: IRegFormValues) => {
-    return AuthService.register(values);
-  }
+export const getUserAnnouncements = createAsyncThunk(
+  "users/user/announcements",
+  async () => UserService.getAnnouncements()
 );
 
-export const login = createAsyncThunk(
-  "users/login",
-  async (values: ILoginFormValues) => {
-    return AuthService.login(values);
-  }
-);
-
-const initialState: {
+interface IAnnouncementData {
   error?: string;
-  data: IAuthData;
   loading: boolean;
-} = {
-  data: {},
-  error: "",
-  loading: false,
+  fetched: boolean;
+  data: IAnnouncement[];
+}
+
+interface IData {
+  announcements: IAnnouncementData;
+}
+
+const initialState = {
+  data: {
+    announcements: {
+      error: "",
+      data: [],
+      fetched: false,
+      loading: false,
+    },
+  } as IData,
 };
 
 const usersSlice = createSlice({
   name: "users",
   initialState: initialState,
-  reducers: {
-    checkLogin: (state, { payload }: PayloadAction<IAuthData>) => {
-      state.data = payload;
-    },
-    logout: (state) => {
-      state.data = {};
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(register.pending, (state) => {
-      state.loading = true;
+    builder.addCase(getUserAnnouncements.pending, (state) => {
+      state.data.announcements.loading = true;
     });
-    builder.addCase(register.fulfilled, (state, { payload }) => {
-      state.error = "";
-      state.loading = false;
-      state.data = payload.data;
+    builder.addCase(getUserAnnouncements.fulfilled, (state, { payload }) => {
+      state.data.announcements.error = "";
+      state.data.announcements.loading = false;
+      state.data.announcements.data = payload.data;
     });
-    builder.addCase(register.rejected, (state, { error }) => {
-      state.loading = false;
-      state.error = error.message;
-    });
-
-    builder.addCase(login.pending, (state) => {
-      state.loading = true;
-    });
-    builder.addCase(login.fulfilled, (state, { payload }) => {
-      state.error = "";
-      state.loading = false;
-      state.data = payload.data;
-    });
-    builder.addCase(login.rejected, (state, { error }) => {
-      state.loading = false;
-      state.error = error.message;
+    builder.addCase(getUserAnnouncements.rejected, (state, { error }) => {
+      state.data.announcements.loading = false;
+      state.data.announcements.error = error.message;
     });
   },
 });
-
-export const { checkLogin, logout } = usersSlice.actions;
 
 export default usersSlice.reducer;

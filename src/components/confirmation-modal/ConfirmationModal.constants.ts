@@ -1,4 +1,4 @@
-import { logout } from "../../redux/slices/users";
+import { logout } from "../../redux/slices/auth";
 
 export const maskStyles: React.CSSProperties = {
   position: "fixed",
