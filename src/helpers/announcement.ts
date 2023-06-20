@@ -12,7 +12,7 @@ export const convertDetailedAnnouncement = (announcement?: IAnnouncement) => {
 };
 
 export const convertAnnouncementForList = (announcement: IAnnouncement) => {
-  const { files, createdAt, make, model, price, year, ...rest } = announcement;
+  const { images, createdAt, make, model, price, year, ...rest } = announcement;
 
   const date = DateTime.fromISO(createdAt, { zone: "utc" });
   const publishedAt = date.toFormat("dd MM yyyy");
@@ -46,7 +46,7 @@ export const convertAnnouncementForList = (announcement: IAnnouncement) => {
   return {
     children,
     isClickable: true,
-    imgPath: files[0].path,
+    imgPath: images[0].path,
     ...rest,
   };
 };

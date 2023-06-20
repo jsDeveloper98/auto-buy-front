@@ -15,7 +15,7 @@ export const CreateAnnouncementForm: FC = () => {
   } = useCreateAnnouncementForm();
 
   return (
-    <div className="CreateAnnouncementForm">
+    <div className="CreateAnnouncementForm d-flex align-items-center flex-column">
       <fieldset disabled={loading}>
         {error && (
           <Alert key="danger" variant="danger">
@@ -138,24 +138,28 @@ export const CreateAnnouncementForm: FC = () => {
             </Form.Control.Feedback>
           </Form.Group>
 
-          <Form.Group controlId="files" className="mb-3">
+          <Form.Group controlId="images" className="mb-3">
             <Form.Label>Upload photos of your car</Form.Label>
             <Form.Control
               multiple
               type="file"
-              name="files"
+              name="images"
               accept="image/*"
+              isValid={touched.images && !errors.images}
+              isInvalid={touched.images && !!errors.images}
               onChange={(event) => {
                 handleChange({
                   target: {
-                    name: "files",
+                    name: "images",
                     value: (event.target as HTMLInputElement).files,
                   },
                 });
               }}
-              isValid={touched.files && !errors.files}
-              isInvalid={touched.files && !!errors.files}
             />
+
+            <Form.Control.Feedback type="invalid">
+              {String(errors.images)}
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Button type="submit" variant="primary" disabled={loading}>

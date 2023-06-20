@@ -11,7 +11,7 @@ export const App: FC = () => {
   return (
     <div className="App">
       <NavBar />
-      <Container>
+      <Container className="py-5">
         <AppRoutes />
       </Container>
       <ConfirmationModal onConfirm={handleConfirmAction} />

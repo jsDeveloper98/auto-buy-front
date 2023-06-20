@@ -16,8 +16,8 @@ export interface IAnnouncement {
   user: string;
   model: string;
   title: string;
-  files: IFile[];
-  price?: number;
+  price: number;
+  images: IFile[];
   createdAt: string;
   description: string;
 }

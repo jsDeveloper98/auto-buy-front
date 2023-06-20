@@ -10,28 +10,28 @@ export const RegisterForm: FC = () => {
   const { error, handleRegister, loading } = useRegisterForm();
 
   return (
-    <Formik
-      initialValues={regFormInitValues}
-      validationSchema={RegisterSchema}
-      onSubmit={handleRegister}
-    >
-      {({
-        errors,
-        values,
-        touched,
-        handleBlur,
-        handleChange,
-        handleSubmit,
-      }) => (
-        <fieldset disabled={loading}>
-          <div className="RegisterForm d-flex align-items-center flex-column">
+    <div className="RegisterForm d-flex align-items-center flex-column">
+      <Formik
+        onSubmit={handleRegister}
+        initialValues={regFormInitValues}
+        validationSchema={RegisterSchema}
+      >
+        {({
+          errors,
+          values,
+          touched,
+          handleBlur,
+          handleChange,
+          handleSubmit,
+        }) => (
+          <fieldset disabled={loading}>
             {error && (
               <Alert key="danger" variant="danger">
                 {error}
               </Alert>
             )}
 
-            <Form onSubmit={handleSubmit} noValidate className="w-25">
+            <Form onSubmit={handleSubmit} noValidate>
               <Form.Group className="mb-3" controlId="username">
                 <Form.Label>Username</Form.Label>
                 <Form.Control
@@ -100,9 +100,9 @@ export const RegisterForm: FC = () => {
                 )}
               </Button>
             </Form>
-          </div>
-        </fieldset>
-      )}
-    </Formik>
+          </fieldset>
+        )}
+      </Formik>
+    </div>
   );
 };

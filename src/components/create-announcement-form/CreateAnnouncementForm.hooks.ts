@@ -35,14 +35,12 @@ export const useCreateAnnouncementForm = () => {
     formData.append("title", values.title);
     formData.append("model", values.model);
     formData.append("year", String(values.year));
+    formData.append("price", String(values.price));
     formData.append("description", values.description);
-    Object.values(values.files).forEach((file: any) => {
-      formData.append("files", file);
-    });
 
-    if (values.price) {
-      formData.append("price", String(values.price));
-    }
+    Object.values(values.images).forEach((img: any) => {
+      formData.append("images", img);
+    });
 
     createAnnouncement(formData);
   };

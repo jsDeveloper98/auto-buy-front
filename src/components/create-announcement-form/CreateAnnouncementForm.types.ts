@@ -1,9 +1,9 @@
 export interface IAnnouncementFormValues {
-  files: any;
+  images: any;
   make: string;
   title: string;
   model: string;
+  year?: number;
   price?: number;
-  year: number | null;
   description: string;
 }

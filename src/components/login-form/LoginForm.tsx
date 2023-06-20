@@ -10,28 +10,28 @@ export const LoginForm: FC = () => {
   const { error, handleLogin, loading } = useLoginForm();
 
   return (
-    <Formik
-      onSubmit={handleLogin}
-      validationSchema={LoginSchema}
-      initialValues={loginFormInitValues}
-    >
-      {({
-        errors,
-        values,
-        touched,
-        handleBlur,
-        handleChange,
-        handleSubmit,
-      }) => (
-        <fieldset disabled={loading}>
-          <div className="LoginForm d-flex align-items-center flex-column">
+    <div className="LoginForm d-flex align-items-center flex-column">
+      <Formik
+        onSubmit={handleLogin}
+        validationSchema={LoginSchema}
+        initialValues={loginFormInitValues}
+      >
+        {({
+          errors,
+          values,
+          touched,
+          handleBlur,
+          handleChange,
+          handleSubmit,
+        }) => (
+          <fieldset disabled={loading}>
             {error && (
               <Alert key="danger" variant="danger">
                 {error}
               </Alert>
             )}
 
-            <Form onSubmit={handleSubmit} noValidate className="w-25">
+            <Form onSubmit={handleSubmit} noValidate>
               <Form.Group className="mb-3" controlId="email">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control
@@ -83,9 +83,9 @@ export const LoginForm: FC = () => {
                 )}
               </Button>
             </Form>
-          </div>
-        </fieldset>
-      )}
-    </Formik>
+          </fieldset>
+        )}
+      </Formik>
+    </div>
   );
 };
