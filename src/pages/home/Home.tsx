@@ -1,10 +1,11 @@
 import { FC } from "react";
 
+import { AnnouncementsList } from "../../components/announcements-list";
+
 export const Home: FC = () => {
   return (
     <div className="Home">
-      <h1>Home</h1>
-      <h1>Home</h1>
+      <AnnouncementsList />
     </div>
   );
 };

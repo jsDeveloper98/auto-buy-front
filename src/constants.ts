@@ -9,6 +9,7 @@ export const TEXTAREA_TYPE_MAX_LENGTH = 400;
 export const MIN_CAR_PRICE = 100;
 export const MAX_CAR_PRICE = 100000000;
 
+// TODO: move later to .json file
 export const CARS_LIST = [
   {
     brand: "Seat",

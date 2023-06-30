@@ -15,18 +15,25 @@ export const Card: FC<IProps> = ({ item }) => {
   return (
     <Link
       className="Card"
-      to={`${pathname}/${item._id}`}
+      to={`${
+        pathname !== "/"
+          ? `${pathname}/`
+          : `${pathname}announcements/${item._id}`
+      }`}
       onClick={(e) => !item.isClickable && e.preventDefault()}
     >
       <BCard style={{ width: "18rem" }}>
-        <BCard.Img
-          variant="top"
-          src={`${BASE_URL}/${item.imgPath}`}
-          style={{
-            height: "150px",
-            objectFit: "cover",
-          }}
-        />
+        {item.imgPath && (
+          <BCard.Img
+            variant="top"
+            src={`${BASE_URL}/${item.imgPath}`}
+            style={{
+              height: "150px",
+              objectFit: "cover",
+            }}
+          />
+        )}
+
         <BCard.Body>
           <BCard.Title>{item.title}</BCard.Title>
           {item.description && (

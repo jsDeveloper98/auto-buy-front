@@ -46,7 +46,7 @@ export const convertAnnouncementForList = (announcement: IAnnouncement) => {
   return {
     children,
     isClickable: true,
-    imgPath: images[0].path,
+    imgPath: images[0]?.path,
     ...rest,
   };
 };

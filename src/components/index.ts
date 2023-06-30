@@ -4,4 +4,4 @@ export * from "./register-form";
 export * from "./confirmation-modal";
 export * from "./my-announcements-list";
 export * from "./create-announcement-form";
-export * from "./announcement-details-card";
+export * from "./announcements-details-card";

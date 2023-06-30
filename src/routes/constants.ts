@@ -21,14 +21,9 @@ export const routesConfig: IRoutesConfig[] = [
     Component: Home,
   },
   {
-    path: "/login",
-    type: "unauthorized",
-    Component: Login,
-  },
-  {
-    path: "/register",
-    type: "unauthorized",
-    Component: Register,
+    path: "/announcements/:announcementId",
+    type: "common",
+    Component: AnnouncementDetails,
   },
   {
     path: "/my_announcements",
@@ -44,5 +39,15 @@ export const routesConfig: IRoutesConfig[] = [
     path: "/my_announcements/:announcementId",
     type: "authorized",
     Component: AnnouncementDetails,
+  },
+  {
+    path: "/login",
+    type: "unauthorized",
+    Component: Login,
+  },
+  {
+    path: "/register",
+    type: "unauthorized",
+    Component: Register,
   },
 ];

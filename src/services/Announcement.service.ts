@@ -15,6 +15,12 @@ class AnnouncementS {
       },
     });
   }
+
+  async get() {
+    return request<ISuccessResponse<IAnnouncement[]>>({
+      url: `${BASE_URL}/announcements`,
+    });
+  }
 }
 
 export const AnnouncementService = new AnnouncementS();

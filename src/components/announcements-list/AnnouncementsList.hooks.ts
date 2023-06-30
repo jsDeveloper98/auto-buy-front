@@ -1,20 +1,16 @@
 import { useMemo, useEffect } from "react";
 
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { getAnnouncements } from "../../redux/slices/announcements";
 import { convertAnnouncementsForList } from "../../helpers/announcement";
-import { getCurrentUserAnnouncements } from "../../redux/slices/currentUser";
 
-export const useMyAnnouncementsList = () => {
+export const useAnnouncementsList = () => {
   const dispatch = useAppDispatch();
 
-  const {
-    data: {
-      announcements: { data, loading },
-    },
-  } = useAppSelector((state) => state.currentUser);
+  const { data, loading } = useAppSelector((state) => state.announcements);
 
   useEffect(() => {
-    dispatch(getCurrentUserAnnouncements());
+    dispatch(getAnnouncements());
   }, [dispatch]);
 
   const listData = useMemo(() => convertAnnouncementsForList(data), [data]);
